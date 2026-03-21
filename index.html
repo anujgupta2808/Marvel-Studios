@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Studios · ECHOES OF STRUGGLE</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- GSAP + ScrollTrigger + Locomotive -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <style>
+        /* ----- DESIGN SYSTEM (premium cinematic) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --font-primary: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+            --font-display: 'Bebas Neue', 'Impact', sans-serif;
+            --grid-margin: 5vw;
+            --grid-gutter: 2rem;
+            --bg-deep: #0a0c0fc1;
+            --text-light: #f0f3f8;
+            --text-muted: #b0b8c5;
+            --glow-size: 22vw;
+            
+            /* accent colors per character (set via style attr) */
+            --accent-primary: #e62429;
+            --accent-secondary: #f5b31c;
+            --glow-color: rgba(230, 36, 41, 0.3);
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-deep);
+            color: var(--text-light);
+            overflow-x: hidden;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* fixed cinematic overlay (vignette + gradient) */
+        .cinematic-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 20%, transparent 20%, rgba(0,0,0,0.8) 90%),
+                        linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 20;
+            mix-blend-mode: multiply;
+        }
+
+        /* locomotive container */
+        [data-scroll-container] {
+            min-height: 100vh;
+        }
+
+        /* section — fullscreen pinned */
+        .section {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding-left: var(--grid-margin);
+            padding-right: var(--grid-margin);
+            will-change: transform, filter;
+        }
+
+        /* content grid — consistent 12 columns */
+        .section-content {
+            position: relative;
+            z-index: 15;
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--grid-gutter);
+            pointer-events: none;
+        }
+
+        .character-info {
+            grid-column: 1 / span 6;
+            text-shadow: 0 0 40px rgba(0,0,0,0.9);
+            transform: translateZ(0);
+        }
+
+        .character-name {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: 0.03em;
+            background: linear-gradient(to right, #fff, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px var(--glow-color));
+            margin-bottom: 1rem;
+        }
+
+        /* LIFE STRUGGLE QUOTE — intense, personal */
+        .struggle-quote {
+            font-size: 1.4rem;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.02em;
+            color: var(--text-light);
+            border-left: 5px solid transparent;
+            border-image: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary)) 1;
+            padding-left: 2rem;
+            margin-top: 1.5rem;
+            max-width: 600px;
+            text-shadow: 0 0 15px rgba(0,0,0,0.8);
+            background: linear-gradient(90deg, rgba(0,0,0,0.3), transparent);
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(2px);
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 10px 30px -10px black;
+        }
+
+        .struggle-quote span {
+            color: var(--accent-secondary);
+            font-weight: 700;
+            font-style: normal;
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .learn-more-btn {
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .learn-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--glow-color);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* three layer depth */
+        .layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .bg-layer {
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px) brightness(0.25);
+            opacity: 0.6;
+            transform: scale(1.1);
+        }
+
+        .character-image {
+            position: absolute;
+            bottom: 0;
+            right: 5%;
+            height: 95vh;
+            max-height: 1000px;
+            aspect-ratio: 9/16;
+            object-fit: contain;
+            object-position: bottom;
+            filter: drop-shadow(0 0 40px var(--glow-color)) brightness(1.1) contrast(1.1);
+            will-change: transform, filter, opacity;
+            transform-origin: center bottom;
+            z-index: 12;
+            transition: filter 0.3s;
+        }
+
+        /* Main image centered vertically for first page */
+        .section:first-child .character-image {
+            top: 50%;
+            bottom: auto;
+            transform: translateY(-50%);
+            height: 150vh;
+            width: auto;
+            max-width: 80%;
+            object-position: center;
+            animation: heroImageFloat 6s ease-in-out infinite;
+        }
+
+        /* @keyframes heroImageFloat {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-52%) scale(1.02); }
+        } */
+
+        /* Unique styling for first page */
+        .section:first-child .character-name {
+            font-size: clamp(5rem, 15vw, 10rem);
+            background: linear-gradient(135deg, var(--accent-primary), #fff, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 30px var(--glow-color)); }
+            50% { filter: drop-shadow(0 0 50px var(--glow-color)) drop-shadow(0 0 80px var(--accent-secondary)); }
+        }
+
+        .section:first-child .character-glow {
+            width: 35vw;
+            height: 35vw;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; transform: translate(20%, -10%) scale(1); }
+            50% { opacity: 1; transform: translate(20%, -10%) scale(1.2); }
+        }
+
+        .section:first-child::after {
+            background: radial-gradient(circle at 30% 50%, rgba(0,51,160,0.3), transparent 50%),
+                        linear-gradient(90deg, rgba(0,0,0,0.9) 0%, transparent 70%);
+        }
+
+        .character-glow {
+            position: absolute;
+            width: var(--glow-size);
+            height: var(--glow-size);
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 80%);
+            border-radius: 50%;
+            bottom: 5%;
+            right: 10%;
+            transform: translate(20%, -10%);
+            filter: blur(70px);
+            z-index: 10;
+            opacity: 0.8;
+            mix-blend-mode: screen;
+        }
+
+        /* abstract city / ruins parallax (struggle backdrop) */
+        .abstract-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 90 L10 70 L25 85 L40 60 L58 80 L75 50 L92 75 L100 55 L100 100 L0 100 Z" fill="%23333" opacity="0.25"/><path d="M0 80 L18 50 L35 75 L52 40 L70 70 L88 30 L100 45 L100 100 L0 100 Z" fill="%23222" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: bottom;
+            opacity: 0.3;
+            mix-blend-mode: overlay;
+        }
+
+        /* loader intro (marvel studios) */
+        .loader-intro {
+            position: fixed;
+            inset: 0;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1.8s cubic-bezier(0.76, 0, 0.24, 1), visibility 1.8s;
+            pointer-events: none;
+        }
+        .loader-intro svg {
+            width: 70%;
+            max-width: 900px;
+            animation: marvelLoader 3s ease forwards;
+        }
+        @keyframes marvelLoader {
+            0% { opacity: 0; transform: scale(1.3); filter: blur(20px); }
+            30% { opacity: 1; transform: scale(1); filter: blur(0); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.9); filter: blur(12px); }
+        }
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* locomotive adjustments */
+        html.has-scroll-smooth { overflow: hidden; }
+
+        .section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, transparent 60%);
+            z-index: 8;
+            pointer-events: none;
+            transition: background 0.5s;
+        }
+
+        @media (max-width: 900px) {
+            .character-info { grid-column: 1 / -1; }
+            .character-image { right: -15%; height: 70vh; }
+            .struggle-quote { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cinematic-overlay"></div>
+
+    <!-- MARVEL STUDIOS LOADER (premium) -->
+    <div class="loader-intro" id="loaderIntro">
+        <!-- <img src="main.png" alt="Loading" style="max-width: 500px; width: 80%; animation: marvelLoader 3s ease forwards; position: relative;left: 20px;"><br> -->
+         <svg viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#e62429;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#fff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#f5b31c;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <text x="400" y="120" fill="url(#glow)" font-family="Bebas Neue, Impact" font-size="90" font-weight="bold" letter-spacing="12" text-anchor="middle">ECHOES</text>
+            <text x="400" y="160" fill="#999" font-family="Arial" font-size="18" letter-spacing="8" text-anchor="middle">OF STRUGGLE</text>
+        </svg>
+    </div>
+
+    <div data-scroll-container id="scroll-container">
+        <!-- sections injected by javascript with struggle quotes -->
+    </div>
+
+    <script>
+        (function() {
+            // ----- CHARACTER DATA with LIFE STRUGGLE quotes (each page gets unique struggle) -----
+            const characters = [
+                { 
+                    name: 'MARVEL STUDIOS', 
+                    
+                    accentPrimary: '#0033a0', 
+                    accentSecondary: '#ef3e42',
+                    image: 'main.png',
+                    bg: 'main.png'
+                },
+                { 
+                    name: 'CAPTAIN AMERICA', 
+                    struggle: '"I woke up from a dream. Everyone I loved is gone. But the fight… the fight is all I have left."',
+                    struggleRef: '— THE MAN OUT OF TIME',
+                    details: 'Steve Rogers, the first Avenger. A super soldier frozen for 70 years, waking to a world he no longer recognizes. Symbol of hope and justice.',
+                    story: 'Steve Rogers was a frail young man from Brooklyn who wanted to serve his country in World War II. He was chosen for the Super Soldier program, transforming him into Captain America. He fought the Red Skull and HYDRA, but crashed into the Arctic and was frozen for 70 years. Awakening in the modern world, he joined the Avengers and became their leader. Steve fought to protect freedom, even when it meant opposing his own government. He reunited with his old friend Bucky Barnes, now the Winter Soldier. After helping defeat Thanos, Steve traveled back in time to return the Infinity Stones and chose to live the life he never had with Peggy Carter.',
+                    accentPrimary: '#0033a0', 
+                    accentSecondary: '#ef3e42',
+                    image: 'captain America.png',
+                    bg: 'captain America.png'
+                },
+                { 
+                    name: 'IRON MAN', 
+                    struggle: '“I watched my inventions destroy lives. Now I carry that guilt inside a suit of armor.”',
+                    struggleRef: '— DEMONS OF THE PAST',
+                    details: 'Genius billionaire Tony Stark built an armored suit to escape captivity, then used it to protect the world. Haunted by his weapons legacy.',
+                    story: 'Tony Stark was a genius inventor and billionaire industrialist who built an empire on weapons manufacturing. During a demonstration in Afghanistan, he was captured by terrorists and gravely injured. To survive, he built a miniaturized arc reactor to power his heart and created the first Iron Man suit to escape. This experience transformed him - he shut down his weapons division and dedicated his life to protecting the world as Iron Man. He joined the Avengers, fought alongside heroes, and ultimately sacrificed himself to save the universe from Thanos, snapping away the Mad Titan and his army at the cost of his own life.',
+                    accentPrimary: '#e62429', 
+                    accentSecondary: '#f5b31c',
+                    image: 'iron man.png',
+                    bg: 'iron man.png'
+                },
+                { 
+                    name: 'SPIDER-MAN', 
+                    struggle: '“No matter how fast I am, I can’t save everyone. And the city I love… sometimes fears me.”',
+                    struggleRef: '— THE WEIGHT OF RESPONSIBILITY',
+                    details: 'Peter Parker gained spider powers from a radioactive bite. With great power comes great responsibility, but the cost is his normal life.',
+                    story: 'Peter Parker was an ordinary high school student until he was bitten by a radioactive spider, gaining superhuman abilities. After his Uncle Ben was killed by a criminal Peter could have stopped, he learned that with great power comes great responsibility. He became Spider-Man, protecting New York City while struggling to balance his superhero duties with school, relationships, and a normal teenage life. Mentored by Tony Stark, Peter fought in the Avengers Civil War, battled the Vulture, and helped defeat Thanos. Despite losing his mentor and facing identity exposure, Peter continues to be the friendly neighborhood Spider-Man.',
+                    accentPrimary: '#ed1d24', 
+                    accentSecondary: '#1f4ab4',
+                    image: 'spiderman.png',
+                    bg: 'spiderman.png'
+                },
+                { 
+                    name: 'THOR', 
+                    struggle: '“I am not the king my father was. I lost my home, my brother, my worth. Am I still worthy?”',
+                    struggleRef: '— FALLEN GOD',
+                    details: 'God of Thunder from Asgard, wielder of Mjolnir. Lost everything - his home, his eye, his brother Loki. Struggles to find his true purpose.',
+                    story: 'Thor, the God of Thunder and prince of Asgard, was once arrogant and reckless. After being banished to Earth by his father Odin, he learned humility and became worthy of wielding Mjolnir. He defended Earth as an Avenger, but tragedy followed him - he lost his mother, his father, his hammer, his eye, and watched his home realm Asgard be destroyed. His brother Loki died saving him from Thanos. Thor fell into depression after failing to stop Thanos from wiping out half the universe. Eventually, he found redemption by helping defeat Thanos and now searches for his true purpose among the stars with the Guardians of the Galaxy.',
+                    accentPrimary: '#2d6ff7', 
+                    accentSecondary: '#a0d2ff',
+                    image: 'thor.png',
+                    bg: 'thor.png'
+                },
+                { 
+                    name: 'DOCTOR STRANGE', 
+                    struggle: '“I saw 14 million futures. In only one we win. The weight of that secret is crushing.”',
+                    struggleRef: '— THE SOLITARY VISION',
+                    details: 'Former surgeon turned Sorcerer Supreme. Master of mystic arts who saw every possible future and made the ultimate sacrifice to save reality.',
+                    story: 'Dr. Stephen Strange was a brilliant but arrogant neurosurgeon whose hands were destroyed in a car accident. Desperate to heal, he traveled to Kamar-Taj and discovered the mystic arts under the Ancient One. He became a Master of the Mystic Arts and eventually the Sorcerer Supreme, protecting Earth from mystical threats. During the battle against Thanos, Strange used the Time Stone to view 14 million possible futures, finding only one where they won. He gave up the Time Stone to save Tony Stark, knowing it was the only way to victory. Strange continues to guard reality from supernatural dangers, including threats from the multiverse.',
+                    accentPrimary: '#ff6a00', 
+                    accentSecondary: '#f90',
+                    image: 'doctor stranger.png',
+                    bg: 'doctor stranger.png'
+                },
+                { 
+                    name: 'BLACK PANTHER', 
+                    struggle: '“A king must lead his people into the future, but my father’s shadow haunts every step.”',
+                    struggleRef: '— LEGACY & LOSS',
+                    details: 'King T\'Challa of Wakanda, protector of the most advanced nation on Earth. Bears the weight of tradition while pushing his kingdom forward.',
+                    story: 'T\'Challa became king of Wakanda after his father T\'Chaka was killed in a terrorist attack. As the Black Panther, he gained enhanced abilities from the heart-shaped herb and wore a vibranium suit. He struggled with his father\'s legacy and the revelation that his father had killed his uncle, leaving his cousin Erik Killmonger orphaned and vengeful. After defeating Killmonger, T\'Challa opened Wakanda to the world, sharing its technology and resources. He fought alongside the Avengers against Thanos and led Wakanda\'s forces in the final battle. T\'Challa was a wise and compassionate leader who balanced tradition with progress.',
+                    accentPrimary: '#7d3ac1', 
+                    accentSecondary: '#b85bff',
+                    image: 'black panter.png',
+                    bg: 'black panter.png'
+                },
+                { 
+                    name: 'HULK', 
+                    struggle: '"The angrier I get, the stronger I become. But what if I can never find peace?"',
+                    struggleRef: '— RAGE WITHIN',
+                    details: 'Bruce Banner, scientist transformed by gamma radiation. Struggles to control the monster within while seeking redemption and inner peace.',
+                    story: 'Dr. Bruce Banner was a brilliant scientist working on gamma radiation when an accident exposed him to massive amounts of gamma rays. This transformed him into the Hulk, a giant green monster of incredible strength who emerges when Banner gets angry. For years, Bruce ran from the military and tried to cure himself. He eventually learned to control the Hulk and joined the Avengers. After the battle with Ultron, Hulk took control and fled to Sakaar, where he became a gladiator champion. Bruce eventually merged his intelligence with Hulk\'s strength, becoming "Smart Hulk." He helped bring everyone back from the Snap, though the gamma radiation permanently damaged his arm.',
+                    accentPrimary: '#6cc24a', 
+                    accentSecondary: '#2d5016',
+                    image: 'hulk.png',
+                    bg: 'hulk.png'
+                },
+                { 
+                    name: 'THANOS', 
+                    struggle: '"I am inevitable. But at what cost? The universe balanced, yet I am alone."',
+                    struggleRef: '— THE MAD TITAN',
+                    details: 'The Mad Titan who sought to balance the universe by erasing half of all life. His twisted vision of salvation cost him everything he loved.',
+                    story: 'Thanos was born on Titan, a moon of Saturn, and witnessed his world collapse from overpopulation. This drove him to a dark mission: to bring balance to the universe by eliminating half of all life. He spent years gathering the six Infinity Stones, sacrificing his adopted daughter Gamora to obtain the Soul Stone. With all six stones in his Infinity Gauntlet, he snapped his fingers and erased half of all living beings. The Avengers eventually tracked him down, but he had destroyed the stones. Five years later, when the Avengers reversed the Snap, a past version of Thanos traveled to the future to stop them, but was ultimately defeated and turned to dust by Iron Man\'s snap.',
+                    accentPrimary: '#8b5cf6', 
+                    accentSecondary: '#fbbf24',
+                    image: 'thonas.png',
+                    bg: 'thonas.png'
+                }
+            ];
+
+            // ----- INJECT SECTIONS with struggle quotes -----
+            const container = document.getElementById('scroll-container');
+            container.innerHTML = '';
+
+            characters.forEach((char, idx) => {
+                const section = document.createElement('section');
+                section.className = 'section';
+                section.setAttribute('data-scroll-section', '');
+                section.style.setProperty('--accent-primary', char.accentPrimary);
+                section.style.setProperty('--accent-secondary', char.accentSecondary);
+                section.style.setProperty('--glow-color', char.accentPrimary + '70'); // 44% alpha
+
+                // Background layer
+                const bgLayer = document.createElement('div');
+                bgLayer.className = 'layer bg-layer';
+                bgLayer.style.backgroundImage = `url('${char.bg}')`;
+
+                // Abstract city/ruins (struggle atmosphere)
+                const abstract = document.createElement('div');
+                abstract.className = 'abstract-bg';
+
+                // Character glow
+                const glow = document.createElement('div');
+                glow.className = 'character-glow';
+
+                // Main character image
+                const img = document.createElement('img');
+                img.className = 'character-image';
+                img.src = char.image;
+                img.alt = char.name;
+                img.crossOrigin = 'anonymous';
+
+                // Content with struggle quote
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'section-content';
+                
+                // First page (MARVEL STUDIOS) - only name, no quote/button
+                if (idx === 0) {
+                    contentDiv.innerHTML = `
+                        <div class="character-info">
+                            <div class="character-name">${char.name}</div>
+                        </div>
+                    `;
+                } else {
+                    contentDiv.innerHTML = `
+                        <div class="character-info">
+                            <div class="character-name">${char.name}</div>
+                            <div class="struggle-quote">
+                                ${char.struggle}
+                                <span>${char.struggleRef}</span>
+                            </div>
+                            <button class="learn-more-btn" onclick="openModal(${idx})">LEARN MORE</button>
+                        </div>
+                    `;
+                }
+
+                section.appendChild(bgLayer);
+                section.appendChild(abstract);
+                section.appendChild(glow);
+                section.appendChild(img);
+                section.appendChild(contentDiv);
+                container.appendChild(section);
+            });
+
+            // ----- MODAL FUNCTIONALITY -----
+            const modalHTML = `
+                <div class="modal" id="characterModal">
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        <h2 id="modalName"></h2>
+                        <p id="modalStory"></p>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+            window.openModal = function(index) {
+                const char = characters[index];
+                document.getElementById('modalName').textContent = char.name;
+                document.getElementById('modalStory').textContent = char.story;
+                document.getElementById('characterModal').classList.add('active');
+            };
+
+            window.closeModal = function() {
+                document.getElementById('characterModal').classList.remove('active');
+            };
+
+            document.getElementById('characterModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // ----- HIDE LOADER -----
+            setTimeout(() => {
+                document.getElementById('loaderIntro').classList.add('loader-hidden');
+            }, 2800);
+
+            // ----- THREE.JS FLOATING PARTICLES (deeper atmosphere) -----
+            const canvas = document.getElementById('particle-canvas');
+            const scene = new THREE.Scene();
+            scene.background = null;
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const particlesGeo = new THREE.BufferGeometry();
+            const particlesCount = 1200;
+            const posArray = new Float32Array(particlesCount * 3);
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                posArray[i] = (Math.random() - 0.5) * 100;
+                posArray[i+1] = (Math.random() - 0.5) * 60;
+                posArray[i+2] = (Math.random() - 20) * 20;
+            }
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMat = new THREE.PointsMaterial({
+                size: 0.2,
+                color: 0x88aaff,
+                transparent: true,
+                opacity: 0.25,
+                blending: THREE.AdditiveBlending
+            });
+            const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+            scene.add(particlesMesh);
+
+            function animateParticles() {
+                particlesMesh.rotation.y += 0.0002;
+                particlesMesh.rotation.x += 0.00005;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // ----- LOCOMOTIVE SCROLL -----
+            const scrollContainer = document.querySelector('[data-scroll-container]');
+            const locoScroll = new LocomotiveScroll({
+                el: scrollContainer,
+                smooth: true,
+                multiplier: 0.7,
+                smartphone: { smooth: true },
+                tablet: { smooth: true }
+            });
+
+            locoScroll.on('scroll', ScrollTrigger.update);
+            ScrollTrigger.scrollerProxy(scrollContainer, {
+                scrollTop(value) {
+                    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+                },
+                getBoundingClientRect() {
+                    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+                },
+                pinType: scrollContainer.style.transform ? 'transform' : 'fixed'
+            });
+
+            // ----- CINEMATIC TRANSITIONS (continuous blend) + preserve struggle text visibility -----
+            const sections = document.querySelectorAll('.section');
+            const images = document.querySelectorAll('.character-image');
+            const glows = document.querySelectorAll('.character-glow');
+            const bgLayers = document.querySelectorAll('.bg-layer');
+            const struggleQuotes = document.querySelectorAll('.struggle-quote'); // keep visible
+
+            // initial state: first visible, others hidden
+            gsap.set(images, { opacity: 0, filter: 'blur(10px)', scale: 0.8, y: 40 });
+            gsap.set(glows, { opacity: 0, scale: 0.5 });
+            gsap.set(bgLayers, { opacity: 0.4, filter: 'blur(16px)', scale: 1.2 });
+            gsap.set(struggleQuotes, { opacity: 1, x: 0 }); // always keep full opacity
+
+            if (images.length) {
+                gsap.set(images[0], { opacity: 1, filter: 'blur(0px)', scale: 1, y: 0 });
+                gsap.set(glows[0], { opacity: 0.8, scale: 1 });
+                gsap.set(bgLayers[0], { opacity: 0.6, filter: 'blur(8px)', scale: 1.1 });
+            }
+
+            // ScrollTrigger for transitions only (no pinning)
+            sections.forEach((section, idx) => {
+                if (idx === sections.length - 1) return;
+
+                const nextSection = sections[idx + 1];
+                const imgCurrent = section.querySelector('.character-image');
+                const imgNext = nextSection.querySelector('.character-image');
+                const glowCurrent = section.querySelector('.character-glow');
+                const glowNext = nextSection.querySelector('.character-glow');
+                const bgCurrent = section.querySelector('.bg-layer');
+                const bgNext = nextSection.querySelector('.bg-layer');
+
+                ScrollTrigger.create({
+                    trigger: section,
+                    scroller: scrollContainer,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.8,
+                    onUpdate: (self) => {
+                        const progress = self.progress;
+
+                        if (imgCurrent) {
+                            gsap.set(imgCurrent, {
+                                opacity: 1 - progress,
+                                scale: 1 - progress * 0.2,
+                                filter: `blur(${progress * 12}px) brightness(${1 - progress * 0.3})`,
+                                rotation: progress * 2.5,
+                                y: progress * 50,
+                            });
+                        }
+                        if (glowCurrent) {
+                            gsap.set(glowCurrent, {
+                                opacity: 0.8 * (1 - progress),
+                                scale: 1 + progress * 1,
+                            });
+                        }
+                        if (bgCurrent) {
+                            gsap.set(bgCurrent, {
+                                opacity: 0.6 * (1 - progress),
+                                scale: 1.1 + progress * 0.2,
+                                filter: `blur(${8 + progress * 12}px)`
+                            });
+                        }
+
+                        if (imgNext) {
+                            gsap.set(imgNext, {
+                                opacity: progress,
+                                scale: 0.8 + progress * 0.2,
+                                filter: `blur(${12 * (1 - progress)}px) brightness(${0.7 + progress * 0.4})`,
+                                rotation: -3 * (1 - progress),
+                                y: -40 * (1 - progress),
+                            });
+                        }
+                        if (glowNext) {
+                            gsap.set(glowNext, {
+                                opacity: 0.8 * progress,
+                                scale: 0.5 + progress * 0.5,
+                            });
+                        }
+                        if (bgNext) {
+                            gsap.set(bgNext, {
+                                opacity: 0.4 + 0.2 * progress,
+                                scale: 1.3 - progress * 0.2,
+                                filter: `blur(${20 * (1 - progress)}px)`
+                            });
+                        }
+                    }
+                });
+            });
+
+            ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
+            ScrollTrigger.refresh();
+
+            window.addEventListener('resize', () => {
+                locoScroll.update();
+                ScrollTrigger.refresh();
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+        })();
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
+</body>
+</html>

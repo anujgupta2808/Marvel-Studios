@@ -1,0 +1,496 @@
+/* CSS Variables - Design System */
+:root {
+    --color-bg: #0a0a0a;
+    --color-text: #ffffff;
+    --color-text-secondary: #a0a0a0;
+    --font-primary: 'Arial Black', sans-serif;
+    --font-secondary: 'Arial', sans-serif;
+    --spacing-unit: 8px;
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+    
+    /* Character Colors */
+    --color-ironman: #c8102e;
+    --color-ironman-secondary: #ffd700;
+    --color-spiderman: #e62429;
+    --color-spiderman-secondary: #2b6cc4;
+    --color-thor: #00a8e8;
+    --color-thor-secondary: #ffd700;
+    --color-strange: #ff6b35;
+    --color-strange-secondary: #f7931e;
+    --color-panther: #9d4edd;
+    --color-panther-secondary: #7209b7;
+    --color-captain: #0a3161;
+    --color-captain-secondary: #b22234;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: auto;
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Loader */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-title {
+    font-family: var(--font-primary);
+    font-size: clamp(2rem, 8vw, 6rem);
+    letter-spacing: 0.2em;
+    color: #fff;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    opacity: 0;
+}
+
+.loader-bar {
+    width: 300px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+}
+
+body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-secondary);
+    -webkit-font-smoothing: antialiased;
+}
+
+.page-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 2;
+}
+
+.hero-title {
+    font-family: var(--font-primary);
+    font-size: clamp(3rem, 12vw, 10rem);
+    letter-spacing: 0.15em;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    background: linear-gradient(180deg, #fff 0%, #666 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    letter-spacing: 0.5em;
+    color: var(--color-text-secondary);
+    font-weight: 300;
+}
+
+/* Character Sections */
+.character-section {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 calc(var(--spacing-unit) * 10);
+    overflow: hidden;
+}
+
+/* Character Hero Sections - Pinned */
+.character-hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 calc(var(--spacing-unit) * 10);
+    overflow: hidden;
+    transition: background-color 1.5s var(--transition-cinematic);
+}
+
+/* Dynamic Background Colors */
+[data-character="ironman"].character-hero {
+    background: linear-gradient(135deg, #1a0505 0%, #0a0a0a 100%);
+}
+
+[data-character="spiderman"].character-hero {
+    background: linear-gradient(135deg, #0d0a1a 0%, #0a0a0a 100%);
+}
+
+[data-character="thor"].character-hero {
+    background: linear-gradient(135deg, #051a1a 0%, #0a0a0a 100%);
+}
+
+[data-character="strange"].character-hero {
+    background: linear-gradient(135deg, #1a0f05 0%, #0a0a0a 100%);
+}
+
+[data-character="panther"].character-hero {
+    background: linear-gradient(135deg, #0f051a 0%, #0a0a0a 100%);
+}
+
+[data-character="captain"].character-hero {
+    background: linear-gradient(135deg, #05091a 0%, #0a0a0a 100%);
+}
+
+/* Origin Story - Horizontal Scroll */
+.origin-story {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.origin-container {
+    display: flex;
+    height: 100%;
+    width: 300vw;
+    will-change: transform;
+}
+
+.origin-item {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 calc(var(--spacing-unit) * 15);
+    position: relative;
+}
+
+.origin-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+
+.origin-title {
+    font-family: var(--font-primary);
+    font-size: clamp(2rem, 5vw, 4rem);
+    letter-spacing: 0.2em;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.origin-text {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    text-align: center;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Background Layer */
+.character-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 70%);
+    z-index: 1;
+}
+
+.character-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+    opacity: 0.3;
+}
+
+/* Character Glow */
+.character-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.4;
+    z-index: 2;
+    transition: background 1.2s var(--transition-cinematic);
+}
+
+/* Character Image Wrapper */
+.character-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.character-image {
+    width: 50vw;
+    height: 90vh;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.8));
+    will-change: transform, opacity, filter;
+}
+
+/* Character Specific Images - Replace with actual images */
+[data-character-img="ironman"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23c8102e" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%23ffd700"/><text x="200" y="350" font-size="48" fill="white" text-anchor="middle" font-family="Arial">IRON MAN</text></svg>');
+}
+
+[data-character-img="spiderman"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23e62429" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%232b6cc4"/><text x="200" y="350" font-size="40" fill="white" text-anchor="middle" font-family="Arial">SPIDER-MAN</text></svg>');
+}
+
+[data-character-img="thor"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%2300a8e8" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%23ffd700"/><text x="200" y="350" font-size="48" fill="white" text-anchor="middle" font-family="Arial">THOR</text></svg>');
+}
+
+[data-character-img="strange"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%23ff6b35" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%23f7931e"/><text x="200" y="350" font-size="36" fill="white" text-anchor="middle" font-family="Arial">DR. STRANGE</text></svg>');
+}
+
+[data-character-img="panther"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%239d4edd" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%237209b7"/><text x="200" y="350" font-size="32" fill="white" text-anchor="middle" font-family="Arial">BLACK PANTHER</text></svg>');
+}
+
+[data-character-img="captain"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect fill="%230a3161" width="400" height="600"/><circle cx="200" cy="200" r="80" fill="%23b22234"/><text x="200" y="350" font-size="32" fill="white" text-anchor="middle" font-family="Arial">CAPTAIN AMERICA</text></svg>');
+}
+
+/* Particles */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Character Info */
+.character-info {
+    position: relative;
+    z-index: 5;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.character-name {
+    font-family: var(--font-primary);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.1em;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    line-height: 1;
+}
+
+.character-name .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100px) rotateX(-90deg);
+}
+
+.character-desc {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--color-text-secondary);
+    margin-bottom: calc(var(--spacing-unit) * 6);
+    line-height: 1.6;
+}
+
+.character-stats {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 1);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.stat-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, currentColor, rgba(255,255,255,0.5));
+    border-radius: 2px;
+    transition: width 1s var(--transition-cinematic);
+}
+
+/* Character Specific Colors */
+[data-character="ironman"] .character-glow {
+    background: radial-gradient(circle, var(--color-ironman) 0%, var(--color-ironman-secondary) 50%, transparent 100%);
+}
+
+[data-character="ironman"] .character-name,
+[data-character="ironman"] .stat-fill {
+    color: var(--color-ironman);
+}
+
+[data-character="spiderman"] .character-glow {
+    background: radial-gradient(circle, var(--color-spiderman) 0%, var(--color-spiderman-secondary) 50%, transparent 100%);
+}
+
+[data-character="spiderman"] .character-name,
+[data-character="spiderman"] .stat-fill {
+    color: var(--color-spiderman);
+}
+
+[data-character="thor"] .character-glow {
+    background: radial-gradient(circle, var(--color-thor) 0%, var(--color-thor-secondary) 50%, transparent 100%);
+}
+
+[data-character="thor"] .character-name,
+[data-character="thor"] .stat-fill {
+    color: var(--color-thor);
+}
+
+[data-character="strange"] .character-glow {
+    background: radial-gradient(circle, var(--color-strange) 0%, var(--color-strange-secondary) 50%, transparent 100%);
+}
+
+[data-character="strange"] .character-name,
+[data-character="strange"] .stat-fill {
+    color: var(--color-strange);
+}
+
+[data-character="panther"] .character-glow {
+    background: radial-gradient(circle, var(--color-panther) 0%, var(--color-panther-secondary) 50%, transparent 100%);
+}
+
+[data-character="panther"] .character-name,
+[data-character="panther"] .stat-fill {
+    color: var(--color-panther);
+}
+
+[data-character="captain"] .character-glow {
+    background: radial-gradient(circle, var(--color-captain) 0%, var(--color-captain-secondary) 50%, transparent 100%);
+}
+
+[data-character="captain"] .character-name,
+[data-character="captain"] .stat-fill {
+    color: var(--color-captain);
+}
+
+/* Cinematic Overlay */
+.character-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+    z-index: 6;
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .character-section,
+    .character-hero {
+        padding: 0 calc(var(--spacing-unit) * 4);
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: calc(var(--spacing-unit) * 10);
+    }
+    
+    .character-image {
+        width: 80vw;
+        height: 60vh;
+    }
+    
+    .character-info {
+        max-width: 100%;
+    }
+    
+    .origin-item {
+        padding: 0 calc(var(--spacing-unit) * 4);
+    }
+    
+    .origin-title {
+        font-size: 2rem;
+    }
+    
+    .origin-text {
+        font-size: 1rem;
+    }
+}
