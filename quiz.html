@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Marvel Quiz & Canon Trivia Challenge · Marvel Studios Fan Experience</title>
+  <meta name="description" content="Test your Marvel Cinematic Universe knowledge with our 20-question interactive quiz. Choose your difficulty, calculate your score, and earn your superhero rank." />
+  <meta name="keywords" content="Marvel Quiz, MCU Trivia, Avengers Test, Marvel Knowledge, Infinity Stones Quiz, MCU Lore Test" />
+  <meta name="theme-color" content="#E62429" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" aria-label="Marvel Studios Fan Portal Home">
+        <span class="marvel-badge">MARVEL</span>
+        <span class="brand-text">STUDIOS FAN PORTAL</span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu" aria-label="Primary Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="heroes.html" class="nav-link">Superheroes</a>
+        <a href="movies.html" class="nav-link">Movies</a>
+        <a href="timeline.html" class="nav-link">Timeline</a>
+        <a href="trailers.html" class="nav-link">Trailers</a>
+        <a href="quiz.html" class="nav-link active">Quiz</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="search-trigger-btn" aria-label="Open Global Search" title="Search MCU (Press '/')">
+          🔍
+        </button>
+        <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: calc(var(--nav-height) + 40px);">
+    <div class="container section-padding">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <span class="section-tag gold">TRIVIA INITIATIVE</span>
+        <h1>THE ULTIMATE MARVEL QUIZ</h1>
+        <p class="section-subtitle">
+          Test your mastery of the Marvel Cinematic Universe across 20 canon questions.
+          Choose your clearance level, track your progress, and see if you rank as a Civilian or a Living Tribunal.
+        </p>
+      </div>
+
+      <div class="quiz-container">
+        
+        <!-- Screen 1: Start & Difficulty Selection -->
+        <div id="quizStartScreen" style="text-align: center;">
+          <h2 style="font-size: 2.4rem; color: #fff; margin-bottom: 1rem;">CHOOSE YOUR CLEARANCE TIER</h2>
+          <p style="margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Select your challenge level or take on the Complete Multiverse Gauntlet of 20 randomized questions.
+          </p>
+
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+            <button class="filter-btn quiz-diff-btn active" data-diff="all">
+              ⚡ All Questions (20 Qs)
+            </button>
+            <button class="filter-btn quiz-diff-btn" data-diff="easy">
+              🛡 Rookie (Easy)
+            </button>
+            <button class="filter-btn quiz-diff-btn" data-diff="medium">
+              ⚔️ Avenger (Medium)
+            </button>
+            <button class="filter-btn quiz-diff-btn" data-diff="hard">
+              🔮 Sorcerer Supreme (Hard)
+            </button>
+          </div>
+
+          <button id="startQuizBtn" class="btn btn-primary btn-lg pulse-red">
+            Begin Mission <span>→</span>
+          </button>
+        </div>
+
+        <!-- Screen 2: Interactive Play Screen -->
+        <div id="quizPlayScreen" style="display: none;">
+          <!-- Progress Bar -->
+          <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-bar" id="quizProgressBar"></div>
+          </div>
+
+          <div class="quiz-header-meta">
+            <span id="quizQuestionCount">Question 1 of 20</span>
+            <span id="quizCurrentScore" style="color: var(--marvel-gold); font-weight: 700;">Score: 0</span>
+          </div>
+
+          <div class="quiz-question-text" id="quizQuestionText">
+            <!-- Injected by js/quiz.js -->
+          </div>
+
+          <div class="quiz-options-list" id="quizOptionsList">
+            <!-- Injected by js/quiz.js -->
+          </div>
+
+          <div class="quiz-explanation-box" id="quizExplanationBox">
+            <!-- Lore explanation injected by js/quiz.js -->
+          </div>
+
+          <div class="quiz-footer-actions">
+            <div></div>
+            <button id="quizNextBtn" class="btn btn-primary" style="display: none;">
+              Next Question <span>→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Screen 3: Results Screen -->
+        <div id="quizResultScreen" style="display: none;">
+          <div class="quiz-result-card">
+            <span class="section-tag gold">MISSION ACCOMPLISHED</span>
+            <div class="quiz-score-badge" id="quizFinalScore">100%</div>
+            <h2 class="quiz-rank-title" id="quizRankTitle">Earth's Mightiest Avenger</h2>
+            <p id="quizRankDesc" style="max-width: 620px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; line-height: 1.6;">
+              Outstanding performance! Tony Stark and Steve Rogers would proudly fight alongside you.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap;">
+              <button id="retakeQuizBtn" class="btn btn-primary">
+                ↻ Retake Challenge
+              </button>
+              <button id="reviewQuizBtn" class="btn btn-outline">
+                📋 Review All Answers
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 4: Review Answers Screen -->
+        <div id="quizReviewScreen" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+            <h2 style="font-size: 2rem; color: #fff;">ANSWER DEBRIEF</h2>
+            <button id="backToResultsBtn" class="btn btn-outline btn-sm">← Back to Score</button>
+          </div>
+          <div id="quizReviewList">
+            <!-- Injected by js/quiz.js -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="fan-disclaimer">
+        <strong>⚠️ Unofficial Fan Website Notice:</strong> This website is an independent fan-made creative project developed strictly for educational, informational, and portfolio demonstration purposes. All Marvel characters, names, logos, and related cinematic media are registered trademarks and copyrights of <strong>Marvel Characters, Inc.</strong> and <strong>The Walt Disney Company</strong>. No copyright infringement is intended.
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="margin-bottom: 1rem; display: inline-flex;">
+            <span class="marvel-badge">MARVEL</span>
+            <span class="brand-text">STUDIOS FAN PORTAL</span>
+          </a>
+          <p>
+            The ultimate fan archive dedicated to the rich storytelling, breathtaking cinema, and iconic characters of the Marvel Cinematic Universe.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="heroes.html">Superheroes</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="timeline.html">MCU Timeline</a></li>
+            <li><a href="trailers.html">Trailers Gallery</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Fan Hub</h4>
+          <ul class="footer-links">
+            <li><a href="quiz.html">Marvel Quiz</a></li>
+            <li><a href="about.html">About Universe</a></li>
+            <li><a href="contact.html">Fan Contact & FAQ</a></li>
+            <li><a href="https://github.com/anujgupta2808/Marvel-Studios" target="_blank" rel="noopener">GitHub Repository ↗</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">S.H.I.E.L.D. Dispatch</h4>
+          <p style="font-size: 0.88rem; margin-bottom: 1rem;">
+            Receive secret transmissions on upcoming MCU movie dates, casting news, and multiversal updates.
+          </p>
+          <form id="newsletterForm" class="footer-newsletter">
+            <input type="email" placeholder="agent@shield.gov" required aria-label="Email address" />
+            <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">Subscribe to Intel</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Marvel Studios Fan Experience. Crafted for Marvel Fans Everywhere.
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="about.html" style="color: var(--text-muted);">About Us</a>
+          <a href="contact.html" style="color: var(--text-muted);">Community Support</a>
+          <a href="https://github.com/anujgupta2808/Marvel-Studios" target="_blank" rel="noopener" style="color: var(--marvel-gold);">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top of page" title="Back to top">
+    ↑
+  </button>
+
+  <!-- Scripts -->
+  <script src="data/characters.js"></script>
+  <script src="data/movies.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/quiz.js"></script>
+</body>
+</html>

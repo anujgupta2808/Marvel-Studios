@@ -1,0 +1,11 @@
+<svg viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#e62429;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#fff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f5b31c;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <text x="400" y="120" fill="url(#glow)" font-family="Bebas Neue, Impact" font-size="90" font-weight="bold" letter-spacing="12" text-anchor="middle">ECHOES</text>
+    <text x="400" y="160" fill="#999" font-family="Arial" font-size="18" letter-spacing="8" text-anchor="middle">OF STRUGGLE</text>
+</svg>

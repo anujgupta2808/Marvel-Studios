@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Superheroes & Characters · Marvel Studios Fan Experience</title>
+  <meta name="description" content="Explore complete superhero archives across the Marvel Cinematic Universe: Iron Man, Captain America, Thor, Black Panther, Spider-Man, Doctor Strange, and iconic villains." />
+  <meta name="keywords" content="Marvel Superheroes, Avengers, Iron Man, Captain America, Thor, Doctor Strange, Black Panther, Thanos, MCU Characters" />
+  <meta name="theme-color" content="#E62429" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" aria-label="Marvel Studios Fan Portal Home">
+        <span class="marvel-badge">MARVEL</span>
+        <span class="brand-text">STUDIOS FAN PORTAL</span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu" aria-label="Primary Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="heroes.html" class="nav-link active">Superheroes</a>
+        <a href="movies.html" class="nav-link">Movies</a>
+        <a href="timeline.html" class="nav-link">Timeline</a>
+        <a href="trailers.html" class="nav-link">Trailers</a>
+        <a href="quiz.html" class="nav-link">Quiz</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="search-trigger-btn" aria-label="Open Global Search" title="Search MCU (Press '/')">
+          🔍
+        </button>
+        <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: calc(var(--nav-height) + 40px);">
+    <div class="container section-padding">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <span class="section-tag gold">THE MULTIVERSE ROSTER</span>
+        <h1>SUPERHEROES & LEGENDS</h1>
+        <p class="section-subtitle">
+          Explore complete dossiers of Earth's Mightiest Heroes, guardians, cosmic protectors, and ruthless conquerors.
+          Click any operative to view combat power ratings, origins, and personal life struggles.
+        </p>
+      </div>
+
+      <!-- Filter & Search Controls -->
+      <div class="filter-wrapper">
+        <div class="filter-row">
+          <div class="search-input-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="heroSearchInput" placeholder="Search by hero name, real name, or superhuman ability..." aria-label="Search heroes" />
+          </div>
+
+          <div class="sort-select-box">
+            <label for="heroSortSelect">Sort:</label>
+            <select id="heroSortSelect" class="sort-select" aria-label="Sort characters">
+              <option value="name-asc">Name (A — Z)</option>
+              <option value="name-desc">Name (Z — A)</option>
+              <option value="power-desc">Highest Combat Power</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-pills" role="tablist" aria-label="Character Affiliation Categories">
+          <button class="filter-btn hero-filter-btn active" data-filter="all">All Legends (All)</button>
+          <button class="filter-btn hero-filter-btn" data-filter="avengers">Avengers</button>
+          <button class="filter-btn hero-filter-btn" data-filter="wakanda">Wakanda</button>
+          <button class="filter-btn hero-filter-btn" data-filter="sorcerers">Mystic Arts</button>
+          <button class="filter-btn hero-filter-btn" data-filter="cosmic">Cosmic Realm</button>
+          <button class="filter-btn hero-filter-btn" data-filter="villains">Villains & Titans</button>
+        </div>
+      </div>
+
+      <!-- Heroes Grid -->
+      <div class="cards-grid" id="heroesGrid">
+        <!-- Rendered dynamically by js/heroes.js -->
+        <noscript>
+          <p style="color: #fff; text-align: center; padding: 2rem;">Please enable JavaScript to explore the dynamic hero database.</p>
+        </noscript>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Character Details Modal -->
+  <div class="modal-overlay" id="heroModal" role="dialog" aria-modal="true" aria-labelledby="heroModalTitle">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" aria-label="Close modal window">&times;</button>
+      <div id="heroModalBody">
+        <!-- Injected dynamically by js/heroes.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="fan-disclaimer">
+        <strong>⚠️ Unofficial Fan Website Notice:</strong> This website is an independent fan-made creative project developed strictly for educational, informational, and portfolio demonstration purposes. All Marvel characters, names, logos, and related cinematic media are registered trademarks and copyrights of <strong>Marvel Characters, Inc.</strong> and <strong>The Walt Disney Company</strong>. No copyright infringement is intended.
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="margin-bottom: 1rem; display: inline-flex;">
+            <span class="marvel-badge">MARVEL</span>
+            <span class="brand-text">STUDIOS FAN PORTAL</span>
+          </a>
+          <p>
+            The ultimate fan archive dedicated to the rich storytelling, breathtaking cinema, and iconic characters of the Marvel Cinematic Universe.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="heroes.html">Superheroes</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="timeline.html">MCU Timeline</a></li>
+            <li><a href="trailers.html">Trailers Gallery</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Fan Hub</h4>
+          <ul class="footer-links">
+            <li><a href="quiz.html">Marvel Quiz</a></li>
+            <li><a href="about.html">About Universe</a></li>
+            <li><a href="contact.html">Fan Contact & FAQ</a></li>
+            <li><a href="https://github.com/anujgupta2808/Marvel-Studios" target="_blank" rel="noopener">GitHub Repository ↗</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">S.H.I.E.L.D. Dispatch</h4>
+          <p style="font-size: 0.88rem; margin-bottom: 1rem;">
+            Receive secret transmissions on upcoming MCU movie dates, casting news, and multiversal updates.
+          </p>
+          <form id="newsletterForm" class="footer-newsletter">
+            <input type="email" placeholder="agent@shield.gov" required aria-label="Email address" />
+            <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">Subscribe to Intel</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Marvel Studios Fan Experience. Crafted for Marvel Fans Everywhere.
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="about.html" style="color: var(--text-muted);">About Us</a>
+          <a href="contact.html" style="color: var(--text-muted);">Community Support</a>
+          <a href="https://github.com/anujgupta2808/Marvel-Studios" target="_blank" rel="noopener" style="color: var(--marvel-gold);">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top of page" title="Back to top">
+    ↑
+  </button>
+
+  <!-- Scripts -->
+  <script src="data/characters.js"></script>
+  <script src="data/movies.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/heroes.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+/* ==========================================================================
+   MARVEL STUDIOS — CINEMATIC ANIMATIONS & ACCESSIBILITY
+   ========================================================================== */
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(230, 36, 41, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(230, 36, 41, 0.8), 0 0 60px rgba(214, 168, 75, 0.3);
+  }
+}
+
+@keyframes goldGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(214, 168, 75, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(214, 168, 75, 0.8), 0 0 50px rgba(230, 36, 41, 0.2);
+  }
+}
+
+@keyframes floatParticles {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes buttonShine {
+  0% {
+    left: -100%;
+  }
+  20% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+/* Utility Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.45s;
+}
+
+.pulse-red {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.pulse-gold {
+  animation: goldGlow 3s infinite ease-in-out;
+}
+
+.floating-hero {
+  animation: floatParticles 6s infinite ease-in-out;
+}
+
+/* Button Shine Effect */
+.btn-primary::after,
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.btn-primary:hover::after,
+.btn-gold:hover::after {
+  animation: buttonShine 1.2s ease;
+}
+
+/* Scroll Reveal States */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced-Motion Accessibility Overrides
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-bg {
+    transform: none !important;
+    transition: none !important;
+  }
+}

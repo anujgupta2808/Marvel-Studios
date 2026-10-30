@@ -1,0 +1,198 @@
+/* ==========================================================================
+   MARVEL STUDIOS — RESPONSIVE & MOBILE-FIRST OPTIMIZATION
+   Breakpoints:
+   - Extra Large Desktops: >= 1440px
+   - Laptops & Desktops: 1024px - 1439px
+   - Tablets & Small Desktops: 768px - 1023px
+   - Large Mobile: 480px - 767px
+   - Small Mobile: < 480px
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops (<= 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --nav-height: 72px;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .hero-stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    padding: 1.4rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .timeline-track::before {
+    left: 30px;
+  }
+
+  .timeline-node {
+    justify-content: flex-start !important;
+    padding-left: 60px;
+  }
+
+  .timeline-card {
+    width: 100% !important;
+  }
+
+  .timeline-dot {
+    left: 30px !important;
+  }
+}
+
+/* Tablets & Mobile Navigation (<= 860px) */
+@media (max-width: 860px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: var(--nav-height);
+    right: -100%;
+    width: 80%;
+    max-width: 380px;
+    height: calc(100vh - var(--nav-height));
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.5rem 2rem;
+    gap: 1.5rem;
+    border-left: 1px solid rgba(230, 36, 41, 0.3);
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.9);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: 1.25rem;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input-box {
+    width: 100%;
+  }
+
+  .sort-select-box {
+    justify-content: space-between;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .modal-dialog {
+    padding: 1.8rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile Screens (<= 600px) */
+@media (max-width: 600px) {
+  :root {
+    --nav-height: 64px;
+  }
+
+  .hero {
+    padding-top: calc(var(--nav-height) + 20px);
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .hero-stats-bar {
+    grid-template-columns: 1fr 1fr;
+    padding: 1.2rem;
+  }
+
+  .stat-num {
+    font-size: 2rem;
+  }
+
+  .section-padding {
+    padding: 4rem 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .quiz-container {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .quiz-option-btn {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .contact-info-card,
+  .contact-form-card {
+    padding: 1.8rem 1.2rem;
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Very Small Mobile Screens (<= 380px) */
+@media (max-width: 380px) {
+  .marvel-badge {
+    font-size: 1.45rem;
+    padding: 2px 8px;
+  }
+
+  .brand-text {
+    display: none;
+  }
+
+  .hero-stats-bar {
+    grid-template-columns: 1fr;
+  }
+}
