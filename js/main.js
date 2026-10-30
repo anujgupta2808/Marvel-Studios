@@ -1,10 +1,11 @@
 /**
  * Marvel Studios Fan Experience — Global Shared Script
- * Handles Navigation, Global Search, Back-to-Top, Toast Notifications,
- * Scroll Reveals, and Ambient Audio Synthesizer.
+ * Handles Navigation, Mobile Drawer, Global Quick Search, Back-to-Top,
+ * Toast Notifications, IntersectionObserver Reveals, and Cinematic Preloader.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initPreloader();
   initNavbar();
   initMobileMenu();
   initBackToTop();
@@ -14,6 +15,81 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* --------------------------------------------------------------------------
+   Cinematic Preloader Loading Page
+   Appears ONLY on page refresh / reload, NOT when navigating from one page to another.
+   -------------------------------------------------------------------------- */
+function initPreloader() {
+  // Check if navigation is a page reload / refresh
+  let isReload = false;
+  if (window.performance) {
+    const navEntries = performance.getEntriesByType("navigation");
+    if (navEntries && navEntries.length > 0) {
+      isReload = navEntries[0].type === "reload";
+    } else if (performance.navigation) {
+      isReload = performance.navigation.type === 1; // 1 = TYPE_RELOAD
+    }
+  }
+
+  // Check if user was navigating internally via link clicks
+  const isInternalNav = sessionStorage.getItem("mcu_nav_transition") === "true";
+  sessionStorage.removeItem("mcu_nav_transition");
+
+  // Record internal link clicks so subsequent page load knows it was an internal navigation
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (link && link.href && link.href.includes(window.location.host) && !link.target && !link.href.includes("#")) {
+      sessionStorage.setItem("mcu_nav_transition", "true");
+    }
+  });
+
+  // ONLY show preloader when user explicitly refreshes the page!
+  // If navigating from one page to another, immediately exit without showing preloader.
+  if (!isReload || isInternalNav) {
+    const existing = document.querySelector("#mcuPreloader");
+    if (existing) existing.remove();
+    return;
+  }
+
+  // Preloader displays on page refresh
+  let preloader = document.querySelector("#mcuPreloader");
+  if (!preloader) {
+    preloader = document.createElement("div");
+    preloader.id = "mcuPreloader";
+    preloader.className = "mcu-preloader";
+    preloader.innerHTML = `
+      <div class="preloader-content">
+        <div class="preloader-badge-wrap">
+          <div class="preloader-marvel-badge">MARVEL</div>
+          <div class="preloader-subtext">STUDIOS</div>
+        </div>
+        <div class="preloader-progress-track">
+          <div class="preloader-progress-bar"></div>
+        </div>
+        <div class="preloader-status">RELOADING SACRED TIMELINE...</div>
+      </div>
+    `;
+    document.body.appendChild(preloader);
+  }
+
+  const dismissPreloader = () => {
+    preloader.classList.add("fade-out");
+    setTimeout(() => {
+      preloader.remove();
+    }, 600);
+  };
+
+  const startTime = Date.now();
+  window.addEventListener("load", () => {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, 800 - elapsed);
+    setTimeout(dismissPreloader, remaining);
+  });
+
+  // Safety fallback
+  setTimeout(dismissPreloader, 2200);
+}
+
+/* --------------------------------------------------------------------------
    Navbar & Mobile Menu
    -------------------------------------------------------------------------- */
 function initNavbar() {
@@ -21,7 +97,7 @@ function initNavbar() {
   if (!navbar) return;
 
   const handleScroll = () => {
-    if (window.scrollY > 40) {
+    if (window.scrollY > 30) {
       navbar.classList.add("scrolled");
     } else {
       navbar.classList.remove("scrolled");
@@ -125,8 +201,8 @@ function initScrollReveal() {
     },
     {
       root: null,
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
+      threshold: 0.1,
+      rootMargin: "0px 0px -30px 0px"
     }
   );
 
@@ -302,4 +378,3 @@ function initNewsletter() {
     input.value = "";
   });
 }
-

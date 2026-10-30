@@ -613,3 +613,17 @@ const MOVIES_DATA = [
   }
 ];
 
+// Automatically generate HDHub4u movie search links for each title with optimal matching keywords
+if (typeof MOVIES_DATA !== "undefined") {
+  MOVIES_DATA.forEach((movie) => {
+    const cleanTitle = movie.title
+      .replace(/[:&]/g, " ")
+      .replace(/['’]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    const query = `${cleanTitle} ${movie.releaseYear || ""}`.trim();
+    movie.watchUrl = `https://hdhub4u.eco/?s=${encodeURIComponent(query)}`;
+  });
+}
+
+

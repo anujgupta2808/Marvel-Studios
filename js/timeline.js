@@ -62,8 +62,10 @@ function initTimelinePage() {
                   ? `<div style="font-size: 0.8rem; color: var(--marvel-red); font-weight: 700; margin-bottom: 0.8rem;">💎 ${movie.infinityStone}</div>`
                   : ""
               }
-              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
-                <span style="font-size: 0.8rem; color: var(--marvel-gold); font-weight: 600;">${movie.boxOffice}</span>
+              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem; gap: 8px; flex-wrap: wrap;">
+                <a href="${movie.watchUrl || ('https://hdhub4u.eco/?s=' + encodeURIComponent(movie.title))}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm" onclick="event.stopPropagation();" title="Watch on HDHub4u">
+                  🎬 HDHub4u ↗
+                </a>
                 <span style="font-size: 0.84rem; color: var(--text-secondary); font-weight: 600;">Explore Movie & Trailer →</span>
               </div>
             </div>

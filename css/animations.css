@@ -1,8 +1,142 @@
 /* ==========================================================================
-   MARVEL STUDIOS — CINEMATIC ANIMATIONS & ACCESSIBILITY
+   MARVEL STUDIOS — CINEMATIC PRELOADER & SMOOTH ANIMATIONS
    ========================================================================== */
 
-/* Keyframe Animations */
+/* --------------------------------------------------------------------------
+   Cinematic Preloader Loading Page
+   -------------------------------------------------------------------------- */
+.mcu-preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #080808;
+  background-image: radial-gradient(circle at 50% 50%, rgba(230, 36, 41, 0.18) 0%, #050505 85%);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, visibility;
+}
+
+.mcu-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 90vw;
+}
+
+.preloader-badge-wrap {
+  position: relative;
+  margin-bottom: 2rem;
+  animation: preloaderPulse 2.4s ease-in-out infinite;
+}
+
+.preloader-marvel-badge {
+  background: var(--marvel-red, #E62429);
+  color: #FFFFFF;
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 700;
+  padding: 4px 24px 2px 24px;
+  letter-spacing: 0.08em;
+  display: inline-block;
+  transform: skewX(-4deg);
+  box-shadow: 0 0 35px rgba(230, 36, 41, 0.8), 0 0 70px rgba(214, 168, 75, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.preloader-subtext {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.75rem, 2.5vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  color: var(--marvel-gold, #D6A84B);
+  text-transform: uppercase;
+  margin-top: 10px;
+  text-shadow: 0 0 15px rgba(214, 168, 75, 0.5);
+}
+
+.preloader-progress-track {
+  width: 260px;
+  max-width: 80vw;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.preloader-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #E62429, #D6A84B);
+  border-radius: 9999px;
+  animation: preloaderFill 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  box-shadow: 0 0 12px rgba(214, 168, 75, 0.8);
+}
+
+.preloader-status {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #A0A0A0;
+  font-weight: 600;
+  animation: statusFlicker 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes preloaderPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(230, 36, 41, 0.4));
+  }
+  50% {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 40px rgba(230, 36, 41, 0.85));
+  }
+}
+
+@keyframes preloaderFill {
+  0% {
+    width: 0%;
+  }
+  40% {
+    width: 65%;
+  }
+  80% {
+    width: 90%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes statusFlicker {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+    color: #FFFFFF;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Keyframe Animations
+   -------------------------------------------------------------------------- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -46,7 +180,7 @@
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-12px) rotate(3deg);
+    transform: translateY(-10px) rotate(2deg);
   }
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -65,12 +199,14 @@
   }
 }
 
-@keyframes scanline {
-  0% {
-    transform: translateY(-100%);
+@keyframes cardTiltIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
   }
-  100% {
-    transform: translateY(1000%);
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -129,14 +265,21 @@
 /* Scroll Reveal States */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Card hover smooth transitions */
+.character-card,
+.movie-card,
+.trailer-item {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -157,9 +300,12 @@
     transform: none !important;
   }
 
+  .mcu-preloader {
+    display: none !important;
+  }
+
   .hero-bg {
     transform: none !important;
     transition: none !important;
   }
 }
-

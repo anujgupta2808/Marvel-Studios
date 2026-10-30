@@ -1,6 +1,7 @@
 /**
  * Marvel Superheroes Page Script
  * Search, Category Filtering, Sorting, Character Details Modal, Stats Bars.
+ * Device-friendly and responsive across all devices.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,8 +43,8 @@ function initHeroesPage() {
       if (currentSort === "name-asc") return a.name.localeCompare(b.name);
       if (currentSort === "name-desc") return b.name.localeCompare(a.name);
       if (currentSort === "power-desc") {
-        const avgA = (a.stats.intelligence + a.stats.strength + a.stats.energy) / 3;
-        const avgB = (b.stats.intelligence + b.stats.strength + b.stats.energy) / 3;
+        const avgA = (a.stats.intelligence + a.stats.strength + a.stats.energy + a.stats.combat) / 4;
+        const avgB = (b.stats.intelligence + b.stats.strength + b.stats.energy + b.stats.combat) / 4;
         return avgB - avgA;
       }
       return 0;
@@ -66,15 +67,15 @@ function initHeroesPage() {
         <article class="character-card reveal-on-scroll is-revealed" data-id="${hero.id}" tabindex="0" role="button" aria-label="View details for ${hero.name}">
           <div class="card-image-wrap">
             <div class="card-glow-bg" style="background: ${hero.accentColor};"></div>
-            <span class="card-badge">${hero.affiliation.split("/")[0]}</span>
-            <img src="${hero.image}" alt="${hero.name}" loading="lazy" onerror="this.src='assets/images/characters/iron-man.png'" />
+            <span class="card-badge">${hero.affiliation.split("/")[0].trim()}</span>
+            <img src="${hero.image}" alt="${hero.name}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/characters/iron-man.png';" />
           </div>
           <div class="card-content">
             <h3 class="card-character-name">${hero.name}</h3>
             <div class="card-real-name">${hero.realName}</div>
             <div class="card-quote">“${hero.quote}”</div>
             <div class="card-footer">
-              <span style="font-size: 0.8rem; color: var(--text-muted);">${hero.firstAppearance}</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">${hero.firstAppearance.split("(")[0]}</span>
               <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openHeroModal('${hero.id}')">Intel Dossier →</button>
             </div>
           </div>
@@ -144,30 +145,30 @@ function initHeroesPage() {
     if (!hero || !modal || !modalContent) return;
 
     modalContent.innerHTML = `
-      <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; align-items: start;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: start;">
         <div style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06), #101010); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; border: 1px solid var(--border-subtle);">
-          <img src="${hero.image}" alt="${hero.name}" style="max-height: 400px; margin: 0 auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9));" />
+          <img src="${hero.image}" alt="${hero.name}" onerror="this.onerror=null; this.src='assets/images/characters/iron-man.png';" style="max-height: 380px; max-width: 100%; object-fit: contain; margin: 0 auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9));" />
           <div style="margin-top: 1.2rem;">
             <span class="section-tag" style="margin-bottom: 0;">Status: ${hero.status}</span>
           </div>
         </div>
         <div>
           <span class="section-tag gold">${hero.affiliation}</span>
-          <h2 style="font-size: 2.8rem; margin: 0.2rem 0; color: #fff;">${hero.name}</h2>
-          <div style="font-size: 1.1rem; color: var(--marvel-gold); margin-bottom: 1.2rem; font-weight: 600;">
+          <h2 style="font-size: clamp(2rem, 5vw, 2.8rem); margin: 0.2rem 0; color: #fff;">${hero.name}</h2>
+          <div style="font-size: 1.05rem; color: var(--marvel-gold); margin-bottom: 1.2rem; font-weight: 600;">
             ${hero.realName} • Portrayed by ${hero.actor}
           </div>
-          <div style="background: rgba(230, 36, 41, 0.08); border-left: 3px solid var(--marvel-red); padding: 12px 16px; margin-bottom: 1.4rem; font-style: italic; color: #E0E0E0;">
+          <div style="background: rgba(230, 36, 41, 0.08); border-left: 3px solid var(--marvel-red); padding: 12px 16px; margin-bottom: 1.4rem; font-style: italic; color: #E0E0E0; font-size: 0.95rem;">
             "${hero.struggleQuote}"
           </div>
           <p style="font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.7;">${hero.bio}</p>
 
-          <h4 style="font-size: 1.2rem; color: var(--marvel-gold); margin-bottom: 0.8rem;">Superhuman Capabilities</h4>
-          <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.8rem;">
+          <h4 style="font-size: 1.15rem; color: var(--marvel-gold); margin-bottom: 0.8rem;">Superhuman Capabilities</h4>
+          <ul style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-bottom: 1.8rem;">
             ${hero.powers.map((p) => `<li style="font-size: 0.86rem; color: #ccc; display: flex; align-items: center; gap: 6px;"><span style="color: var(--marvel-red);">⚡</span> ${p}</li>`).join("")}
           </ul>
 
-          <h4 style="font-size: 1.2rem; color: var(--marvel-gold); margin-bottom: 0.8rem;">Power Attributes</h4>
+          <h4 style="font-size: 1.15rem; color: var(--marvel-gold); margin-bottom: 0.8rem;">Power Attributes</h4>
           <div class="stats-grid">
             <div class="stat-bar-item">
               <label><span>Intelligence</span> <span>${hero.stats.intelligence}%</span></label>
@@ -195,7 +196,7 @@ function initHeroesPage() {
             </div>
           </div>
 
-          <h4 style="font-size: 1.2rem; color: var(--marvel-gold); margin: 1.5rem 0 0.8rem 0;">Key MCU Appearances</h4>
+          <h4 style="font-size: 1.15rem; color: var(--marvel-gold); margin: 1.5rem 0 0.8rem 0;">Key MCU Appearances</h4>
           <div style="display: flex; flex-wrap: wrap; gap: 8px;">
             ${hero.keyAppearances.map((m) => `<span style="background: rgba(255,255,255,0.06); padding: 4px 12px; border-radius: var(--radius-sm); font-size: 0.82rem; color: #ddd; border: 1px solid var(--border-subtle);">${m}</span>`).join("")}
           </div>
@@ -225,7 +226,7 @@ function initHeroesPage() {
     }
   });
 
-  // Check URL query parameters for direct modal open (e.g., heroes.html?id=iron-man)
+  // Check URL query parameters for direct modal open
   const urlParams = new URLSearchParams(window.location.search);
   const heroIdParam = urlParams.get("id");
   if (heroIdParam) {
@@ -235,4 +236,3 @@ function initHeroesPage() {
   // Initial render
   renderCharacters();
 }
-

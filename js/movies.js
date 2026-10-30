@@ -83,8 +83,10 @@ function initMoviesPage() {
               <span>⏱ ${movie.runtime}</span>
             </div>
             <p class="movie-synopsis">${movie.synopsis}</p>
-            <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
-              <span style="font-size: 0.78rem; color: var(--marvel-gold); font-weight: 600;">${movie.boxOffice}</span>
+            <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem; gap: 8px; flex-wrap: wrap;">
+              <a href="${movie.watchUrl || ('https://hdhub4u.eco/?s=' + encodeURIComponent(movie.title))}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm" onclick="event.stopPropagation();" title="Watch on HDHub4u">
+                🎬 HDHub4u ↗
+              </a>
               <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openMovieModal('${movie.id}')">Details & Trailer →</button>
             </div>
           </div>
@@ -166,7 +168,7 @@ function initMoviesPage() {
           </iframe>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
           <div>
             <div style="display: flex; gap: 10px; margin-bottom: 0.8rem;">
               <span class="section-tag gold" style="margin-bottom: 0;">${movie.phase}</span>
@@ -179,8 +181,14 @@ function initMoviesPage() {
             <p style="font-size: 1.05rem; line-height: 1.7; color: #D1D5DB; margin-bottom: 1.5rem;">${movie.synopsis}</p>
 
             <h4 style="font-size: 1.15rem; color: var(--marvel-gold); margin-bottom: 0.6rem;">Key Cast & Characters</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem;">
               ${movie.keyCharacters.map((c) => `<span style="background: rgba(255,255,255,0.06); padding: 5px 12px; border-radius: var(--radius-sm); font-size: 0.84rem; color: #fff; border: 1px solid var(--border-subtle);">${c}</span>`).join("")}
+            </div>
+
+            <div>
+              <a href="${movie.watchUrl || ('https://hdhub4u.eco/?s=' + encodeURIComponent(movie.title))}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
+                🍿 Watch & Download on HDHub4u ↗
+              </a>
             </div>
           </div>
 

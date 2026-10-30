@@ -8,22 +8,23 @@
 
 > **Live Production Website:** [https://anujgupta2808.github.io/Marvel-Studios/](https://anujgupta2808.github.io/Marvel-Studios/)
 
-A complete, cinematic web application honoring the Marvel Cinematic Universe (MCU). Engineered with modern, vanilla web standards (HTML5, CSS3, ES6+ JavaScript), this responsive portal delivers an immersive fan experience across 8 interconnected pages with zero external runtime dependencies.
+A complete, cinematic web application honoring the Marvel Cinematic Universe (MCU). Engineered with modern, vanilla web standards (HTML5, CSS3, ES6+ JavaScript), this responsive portal delivers an immersive fan experience across 6 interconnected pages with zero external runtime dependencies.
 
 ---
 
-## 🌟 Key Features Across All 8 Pages
+## 🌟 Key Features Across All 6 Pages
 
 1. **Home (`index.html`)**
    - Panoramic cinematic hero banner with atmospheric nebulae and glowing particle effects.
-   - Live MCU statistics counter (34+ Films, 12+ Superheroes, 6 Phases, \$30B+ Box Office).
-   - Earth's Mightiest Legends spotlight carousel and cinematic monument teasers.
+   - Cinematic **Marvel Studios Loading Page / Preloader Screen** appearing on page reload/refresh with animated progress indicator (seamlessly bypassed during page-to-page navigation).
+   - Live MCU statistics counter (34+ Films, 24+ Superheroes, 6 Phases, \$30B+ Box Office).
+   - Earth's Mightiest Legends spotlight carousel and cinematic monument teasers with direct HDHub4u links.
    - Dual-mode timeline preview and interactive quiz CTA.
 
 2. **Superheroes (`heroes.html`)**
-   - Complete character archives with high-resolution portraits.
+   - Comprehensive roster of **24+ iconic Marvel heroes, mutants, and cosmic titans** (Iron Man, Captain America, Thor, Spider-Man, Doctor Strange, Black Panther, Hulk, Thanos, Deadpool, Wolverine, Scarlet Witch, Loki, Black Widow, Captain Marvel, Ant-Man, Hawkeye, Winter Soldier, Star-Lord, Shang-Chi, Moon Knight, Vision, Daredevil, Shuri, Namor).
    - Real-time search bar filtering across hero names, secret identities, and superhuman powers.
-   - Category filtering: All Legends, Avengers, Wakanda, Mystic Arts, Cosmic Realm, Villains & Titans.
+   - Category filtering: All Legends, Avengers, Mutants & X-Men, Wakanda, Mystic Arts, Cosmic Realm, Villains & Titans.
    - Sorting by Name (A–Z / Z–A) and Combat Power.
    - Detailed Intelligence Dossier Modal featuring struggle quotes, origin biographies, superhuman capability checklists, and power attribute stat bars.
 
@@ -31,6 +32,7 @@ A complete, cinematic web application honoring the Marvel Cinematic Universe (MC
    - 34+ MCU feature films spanning Phase 1 to Phase 6.
    - Filter by Phase (1 through 6) or Saga (The Infinity Saga, The Multiverse Saga).
    - Sort by Theatrical Release Date, Box Office Gross, or Title.
+   - Direct movie stream and download links powered by [HDHub4u](https://hdhub4u.eco/) integrated on every movie card and inside the movie details modal.
    - Cinema Details Modal with embedded YouTube trailer player, box office receipts, runtime, critical ratings, cast, and Infinity Stone nexus points.
 
 4. **MCU Timeline (`timeline.html`)**
@@ -51,12 +53,6 @@ A complete, cinematic web application honoring the Marvel Cinematic Universe (MC
    - Dynamic score calculator and superhero rank classification (from S.H.I.E.L.D. Recruit to Living Tribunal).
    - Full post-quiz Answer Debrief mode.
 
-7. **About (`about.html`)**
-   - Detailed historical overview of the Marvel Cinematic Universe.
-   - Deep dive into The Infinity Saga (2008–2019) and The Multiverse Saga (2021–Present).
-   - Dedicated Stan Lee (1922–2018) tribute section honoring his creative legacy.
-   - Engineering documentation detailing the zero-dependency, mobile-first design architecture.
-
 ---
 
 ## 🎨 Cinematic Visual Identity
@@ -75,29 +71,28 @@ A complete, cinematic web application honoring the Marvel Cinematic Universe (MC
 
 ```
 Marvel-Studios/
-├── index.html              # Home Page
-├── heroes.html             # Superheroes & Character Dossiers
+├── index.html              # Home Page & Cinematic Preloader
+├── heroes.html             # 24+ Superheroes & Character Dossiers
 ├── movies.html             # MCU Feature Films Archive
 ├── timeline.html           # Interactive Dual-Order Timeline
 ├── trailers.html           # Official Video Trailers Gallery
 ├── quiz.html               # 20-Question Canon Trivia Quiz
-├── about.html              # Universe Origins & Stan Lee Tribute
 │
 ├── css/
 │   ├── style.css           # Global tokens, typography, navbar, cards, modals, footer
-│   ├── responsive.css      # Fluid breakpoints (1024px, 860px, 600px, 380px)
-│   └── animations.css      # Keyframes, glow pulses, shine effects, reduced-motion
+│   ├── responsive.css      # Ultra-fluid breakpoints (1440px, 1024px, 880px, 640px, 360px)
+│   └── animations.css      # Preloader, keyframes, glow pulses, shine effects, reduced-motion
 │
 ├── js/
-│   ├── main.js             # Sticky navbar, mobile menu, search modal, back-to-top, toast
-│   ├── heroes.js           # Character filtering, search, sorting, dossier modal
+│   ├── main.js             # Cinematic preloader, sticky nav, mobile drawer, search modal
+│   ├── heroes.js           # 24+ character filtering, search, sorting, dossier modal
 │   ├── movies.js           # Movie filtering, sorting, trailer modal
 │   ├── timeline.js         # Release vs Chronological timeline engine
 │   ├── trailers.js         # Trailer gallery & video theater player
 │   └── quiz.js             # Trivia quiz engine, timer, scoring, badges, review
 │
 ├── data/
-│   ├── characters.js       # Complete 12+ character stats & biographies
+│   ├── characters.js       # Complete 24+ character stats & biographies
 │   ├── movies.js           # Complete 34+ movie catalog & box office figures
 │   └── questions.js        # 20 trivia questions with canonical explanations
 │

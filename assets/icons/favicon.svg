@@ -1,11 +1,30 @@
-<svg viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#e62429;stop-opacity:1" />
-            <stop offset="50%" style="stop-color:#fff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#f5b31c;stop-opacity:1" />
-        </linearGradient>
-    </defs>
-    <text x="400" y="120" fill="url(#glow)" font-family="Bebas Neue, Impact" font-size="90" font-weight="bold" letter-spacing="12" text-anchor="middle">ECHOES</text>
-    <text x="400" y="160" fill="#999" font-family="Arial" font-size="18" letter-spacing="8" text-anchor="middle">OF STRUGGLE</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="mRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A30" />
+      <stop offset="100%" stop-color="#B80E14" />
+    </linearGradient>
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5B31C" />
+      <stop offset="100%" stop-color="#9E7618" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Gold Rim -->
+  <rect x="2" y="2" width="60" height="60" rx="10" fill="url(#goldRim)" />
+  
+  <!-- Inner Marvel Red Badge -->
+  <rect x="4" y="4" width="56" height="56" rx="8" fill="url(#mRed)" />
+  
+  <!-- Subtle Top Highlight -->
+  <path d="M4 12 Q4 4 12 4 L52 4 Q60 4 60 12 L60 22 L4 22 Z" fill="#FFFFFF" opacity="0.12" />
+  
+  <!-- Iconic MARVEL Bold Condensed Typography -->
+  <text x="32" y="41" font-family="'Impact', 'Bebas Neue', 'Arial Black', sans-serif" font-size="18.5" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="1" filter="url(#shadow)">MARVEL</text>
+  
+  <!-- Bottom Gold Accent Line -->
+  <rect x="12" y="47" width="40" height="2" rx="1" fill="#F5B31C" opacity="0.95" />
 </svg>
