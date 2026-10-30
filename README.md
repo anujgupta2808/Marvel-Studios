@@ -57,12 +57,6 @@ A complete, cinematic web application honoring the Marvel Cinematic Universe (MC
    - Dedicated Stan Lee (1922–2018) tribute section honoring his creative legacy.
    - Engineering documentation detailing the zero-dependency, mobile-first design architecture.
 
-8. **Contact & Community HQ (`contact.html`)**
-   - Client-side validated encrypted dispatch form with live character counter (500 max).
-   - Real-time input validation for codenames, emails, and messages.
-   - Simulated transmission feedback with toast notifications.
-   - Interactive FAQ accordion for viewing orders, canon guidelines, and contributions.
-
 ---
 
 ## 🎨 Cinematic Visual Identity
@@ -88,7 +82,6 @@ Marvel-Studios/
 ├── trailers.html           # Official Video Trailers Gallery
 ├── quiz.html               # 20-Question Canon Trivia Quiz
 ├── about.html              # Universe Origins & Stan Lee Tribute
-├── contact.html            # Fan Community Dispatch & FAQ
 │
 ├── css/
 │   ├── style.css           # Global tokens, typography, navbar, cards, modals, footer
@@ -101,8 +94,7 @@ Marvel-Studios/
 │   ├── movies.js           # Movie filtering, sorting, trailer modal
 │   ├── timeline.js         # Release vs Chronological timeline engine
 │   ├── trailers.js         # Trailer gallery & video theater player
-│   ├── quiz.js             # Trivia quiz engine, timer, scoring, badges, review
-│   └── contact.js          # Form validation, character counter, FAQ accordion
+│   └── quiz.js             # Trivia quiz engine, timer, scoring, badges, review
 │
 ├── data/
 │   ├── characters.js       # Complete 12+ character stats & biographies

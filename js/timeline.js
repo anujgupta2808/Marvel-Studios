@@ -94,3 +94,4 @@ function initTimelinePage() {
   // Initial render
   renderTimeline();
 }
+

@@ -302,3 +302,4 @@ function initNewsletter() {
     input.value = "";
   });
 }
+

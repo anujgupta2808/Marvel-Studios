@@ -250,3 +250,4 @@ function initMoviesPage() {
   // Initial render
   renderMovies();
 }
+

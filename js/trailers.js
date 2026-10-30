@@ -140,3 +140,4 @@ function initTrailersPage() {
   // Initial render
   renderTrailers();
 }
+

@@ -612,3 +612,4 @@ const MOVIES_DATA = [
     infinityStone: null
   }
 ];
+

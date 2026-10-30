@@ -235,3 +235,4 @@ function initHeroesPage() {
   // Initial render
   renderCharacters();
 }
+

@@ -401,3 +401,4 @@ const CHARACTERS_DATA = [
     image: "assets/images/characters/thor.png" // placeholder gracefully supported
   }
 ];
+
